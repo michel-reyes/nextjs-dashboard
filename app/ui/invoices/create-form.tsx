@@ -15,6 +15,7 @@ import { useFormState } from "react-dom";
 export default function Form({ customers }: { customers: CustomerField[] }) {
   const initialState = { message: null, error: {} };
   const [state, dispatch] = useFormState(createInvoice, initialState);
+
   return (
     <form action={dispatch}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
@@ -51,7 +52,6 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
               ))}
           </div>
         </div>
-
         {/* Invoice Amount */}
         <div className="mb-4">
           <label htmlFor="amount" className="mb-2 block text-sm font-medium">
@@ -80,7 +80,6 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
             </div>
           </div>
         </div>
-
         {/* Invoice Status */}
         <fieldset aria-describedby="status-error">
           <legend className="mb-2 block text-sm font-medium">
@@ -129,7 +128,13 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
               ))}
           </div>
         </fieldset>
+        <div id="general-error" aria-live="polite" aria-atomic="true">
+          {state.message && (
+            <p className="mt-2 text-sm text-red-500">{state.message}</p>
+          )}
+        </div>
       </div>
+
       <div className="mt-6 flex justify-end gap-4">
         <Link
           href="/dashboard/invoices"
